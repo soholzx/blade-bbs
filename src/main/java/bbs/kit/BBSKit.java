@@ -51,8 +51,8 @@ public class BBSKit {
 	}
 
 	public static void writeDB(Map<String, Object> map) {
-		String filePath = BBSKit.class.getResource("/").getPath() + "jdbc.properties";
-		Properties properties = PropertyKit.getProperty("jdbc.properties");
+		String filePath = BBSKit.class.getResource("/").getPath() + "ds.properties";
+		Properties properties = PropertyKit.getProperty("ds.properties");
 		try {
 			OutputStream outputStream = new FileOutputStream(filePath);
 			properties.putAll(map);

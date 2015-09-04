@@ -8,9 +8,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+
+import javax.sql.DataSource;
 
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+
+import com.alibaba.druid.pool.DruidDataSourceFactory;
 
 import bbs.Constant;
 import bbs.kit.BBSKit;
@@ -21,9 +26,11 @@ import blade.Blade;
 import blade.annotation.Inject;
 import blade.kit.EncrypKit;
 import blade.kit.FileKit;
+import blade.kit.PropertyKit;
 import blade.kit.StringKit;
 import blade.kit.SystemKit;
 import blade.plugin.sql2o.Sql2oPlugin;
+import blade.plugin.sql2o.ds.DataSourceManager;
 import blade.render.ModelAndView;
 
 public class InstallRoute implements RouteBase {
@@ -225,13 +232,18 @@ public class InstallRoute implements RouteBase {
 				dbMap.put("blade.db.url", url);
 				dbMap.put("blade.db.username", dbuser);
 				dbMap.put("blade.db.password", dbpsw);
+				
 				// 写入数据库配置
 				BBSKit.writeDB(dbMap);
 				
-				// 配置数据库插件
-				Sql2oPlugin.INSTANCE.load("jdbc.properties").run();
-				
-				
+				try {
+					Properties props = PropertyKit.getProperty("ds.properties");
+					DataSource dataSource = DruidDataSourceFactory.createDataSource(props);
+					DataSourceManager.me().setDataSource(dataSource);
+					Sql2oPlugin.INSTANCE.run();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 				
 				User user = userService.getByUsername(username);
 				req.session().attribute(Constant.LOGIN_SESSION, user);
