@@ -96,6 +96,82 @@ public class TopicRoute implements RouteBase{
 			return null;
 		});
 		
+		Blade.get("/topic/edit/:tid", (request, response) -> {
+			User user = verifySignin();
+			if(null == user){
+				response.go("/");
+				return null;
+			}
+			
+			Integer tid = request.pathParamToInt("tid");
+			Map<String, Object> topicMap = topicService.getMap(tid);
+			ModelAndView modelAndView = this.getFrontModelAndView("topic_edit");
+			modelAndView.add("nodes", nodeService.getNodes(null, null));
+			modelAndView.add("topic", topicMap);
+			return null;
+		});
+		
+		Blade.get("/topic/edit/:tid", (request, response) -> {
+			User user = verifySignin();
+			if(null == user){
+				response.go("/");
+				return null;
+			}
+			
+			Integer tid = request.pathParamToInt("tid");
+			Map<String, Object> topicMap = topicService.getMap(tid);
+			ModelAndView modelAndView = this.getFrontModelAndView("topic_edit");
+			modelAndView.add("nodes", nodeService.getNodes(null, null));
+			modelAndView.add("topic", topicMap);
+			return modelAndView;
+		});
+		
+		Blade.post("/topic/edit/:tid", (request, response) -> {
+			User user = verifySignin();
+			if(null == user){
+				response.go("/");
+				return null;
+			}
+			
+			Integer tid = request.pathParamToInt("tid");
+			Map<String, Object> topicMap = topicService.getMap(tid);
+			ModelAndView modelAndView = this.getFrontModelAndView("topic_edit");
+			modelAndView.add("nodes", nodeService.getNodes(null, null));
+			modelAndView.add("topic", topicMap);
+			
+			String title = request.query("title");
+			String content = request.query("content");
+			Integer nid = request.queryToInt("nid");
+			
+			modelAndView.add("title", title);
+			modelAndView.add("nid", nid);
+			modelAndView.add("content", content);
+			if(StringKit.isBlank(title)){
+				modelAndView.add(ERROR, "标题不能为空");
+				return modelAndView;
+			}
+			if(null == nid){
+				modelAndView.add(ERROR, "请选择一个节点");
+				return modelAndView;
+			}
+			if(StringKit.isBlank(content) || content.length() < 5){
+				modelAndView.add(ERROR, "内容长度必须大于5个字符");
+				return modelAndView;
+			}
+			
+			if(content.length() > 10000){
+				modelAndView.add(ERROR, "内容长度超过限制");
+				return modelAndView;
+			}
+			
+			// 修改帖子
+			topicService.update(tid, nid, title, content);
+			
+			response.go("/topic/" + tid);
+			
+			return null;
+		});
+		
 		Blade.get("/topic/:tid", (request, response) -> {
 			Integer tid = request.pathParamToInt("tid");
 			if(null == tid){

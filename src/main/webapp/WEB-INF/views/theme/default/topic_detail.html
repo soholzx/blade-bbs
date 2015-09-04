@@ -11,8 +11,8 @@
                         <span>By <a href="${base_url('member/')}${topic.username}">${topic.username}</a></span>&nbsp;•&nbsp;
                         <span>${fmtdate(topic.addtime)}</span>&nbsp;•&nbsp;
                         <span>${topic.view}次点击</span>
-                        #if(null!=login_user&&login_user.group_id==1)
-                        &nbsp;•&nbsp;&nbsp;<span><a href="${base_url('/admin/topic/edit/')}${topic.tid}">编辑</a></span>
+                        #if(null!=login_user && topic.uid == login_user.uid)
+                        &nbsp;•&nbsp;&nbsp;<span><a href="${base_url('/topic/edit/') + topic.tid}">编辑</a></span>
                         #end
                     </small>
                 </div>
