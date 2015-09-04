@@ -229,9 +229,12 @@ public class InstallRoute implements RouteBase {
 				FileKit.createFile(classPath + File.separator + "install.lock");
 				
 				Map<String, Object> dbMap = new HashMap<>();
-				dbMap.put("blade.db.url", url);
-				dbMap.put("blade.db.username", dbuser);
-				dbMap.put("blade.db.password", dbpsw);
+//				dbMap.put("blade.db.url", url);
+//				dbMap.put("blade.db.username", dbuser);
+//				dbMap.put("blade.db.password", dbpsw);
+				dbMap.put("url", url);
+				dbMap.put("username", dbuser);
+				dbMap.put("password", dbpsw);
 				
 				// 写入数据库配置
 				BBSKit.writeDB(dbMap);
