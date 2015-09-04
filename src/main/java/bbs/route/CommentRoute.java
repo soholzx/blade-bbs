@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import bbs.Constant;
+import bbs.model.Topic;
 import bbs.model.User;
 import bbs.service.CommentService;
 import bbs.service.NoticeService;
@@ -53,6 +54,29 @@ public class CommentRoute implements RouteBase {
 			Integer tid = request.queryToInt("tid");
 			Integer tuid = request.queryToInt("tuid");
 			String content = request.query("content");
+			
+			Topic topic = topicService.get(tid);
+			if(null == topic){
+				response.go("/");
+				return null;
+			}
+			
+			Date time = DateKit.getDateByUnixTime(DateKit.getCurrentUnixTime() - 86400*90);
+			
+			WhereParam where = WhereParam.me().eq("a.status", 1).greaterThan("a.addtime", time);
+			List<Map<String, Object>> hot_topics = topicService.getTopicRecent(where, 1, 10, "view desc").getResults();
+			
+			Map<String, Object> topicMap = topicService.getMap(tid);
+			modelAndView.add("topic", topicMap);
+			modelAndView.add("hot_topics", hot_topics);
+			
+			// 收藏状态
+			boolean isfollow = userService.isFollow(user.getUid(), tid, "topic");
+			modelAndView.add("isfollow", isfollow);
+						
+			// 评论列表
+			List<Map<String, Object>> comments = commentService.getComments(tid);
+			modelAndView.add("comments", comments);
 			
 			if(null == tid || null == tuid){
 				modelAndView.add(ERROR, "无效的回复！");

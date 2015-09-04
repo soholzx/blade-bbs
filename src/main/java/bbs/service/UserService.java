@@ -3,6 +3,8 @@ package bbs.service;
 import java.util.Map;
 
 import bbs.model.User;
+import blade.plugin.sql2o.Page;
+import blade.plugin.sql2o.WhereParam;
 
 public interface UserService {
 
@@ -32,4 +34,8 @@ public interface UserService {
 			String location, String homepage, String signature, String introduction);
 
 	public User updateAvatar(Integer uid, String avatar);
+
+	public Page<Map<String, Object>> getUsers(WhereParam whereParam, Integer page, Integer pageSize);
+
+	public void updateUserName(Integer uid, String username, String email);
 }

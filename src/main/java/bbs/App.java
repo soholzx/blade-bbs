@@ -15,6 +15,7 @@ import bbs.kit.BBSKit;
 import bbs.route.admin.AdminRoute;
 import bbs.route.admin.NodeRoute;
 import bbs.route.admin.TopicRoute;
+import bbs.route.admin.UserRoute;
 import bbs.service.OptionService;
 import bbs.service.UserService;
 import blade.Blade;
@@ -57,6 +58,7 @@ public class App extends Bootstrap {
 		Blade.load(AdminRoute.class);
 		Blade.load(NodeRoute.class);
 		Blade.load(TopicRoute.class);
+		Blade.load(UserRoute.class);
 		
 		Blade.before("/*", new Router() {
 			@Override
@@ -64,7 +66,6 @@ public class App extends Bootstrap {
 				if(!BBSKit.isInstall() && request.uri().indexOf("/install") == -1){
 					return request.invoke("/install");
 				}
-				
 				request.attribute("cdn", Constant.CDN_SITE);
 				request.attribute("version", "1.0");
 				return request.invoke();

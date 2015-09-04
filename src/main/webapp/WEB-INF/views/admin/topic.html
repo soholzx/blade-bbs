@@ -30,7 +30,11 @@
                                 <td><a href="${base_url('/topic/')}${topic.tid}" title="${topic.title}" target="_blank">${str_count(topic.title, 36)}</a></td>
                                 <td><a href="${base_url('/member/')}${topic.username}" target="_blank">${topic.username}</a></td>
                                 <td><span title="${fmtdate(topic.addtime)}">${fmtdate(topic.addtime)}</span></td>
-                                <td><a href="${base_url('/admin/topic/edit/')}${topic.tid}" target="_blank">编辑</a> <a href="javascript:if(confirm('确实要删除吗?'))location='${base_url('/admin/topic/del/')}${topic.tid}'">删除</a></td>
+                                <td>
+                                <a href="${base_url('/admin/topic/edit/')}${topic.tid}">编辑</a>
+                                #if(login_user.group_id == 1) 
+                                <a href="javascript:if(confirm('确实要删除吗?'))location='${base_url('/admin/topic/del/') + topic.tid}'">删除</a></td>
+                                #end
                             </tr>
                             #end
                             </tbody>

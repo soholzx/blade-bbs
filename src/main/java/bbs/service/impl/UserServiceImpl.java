@@ -5,13 +5,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import bbs.Constant;
 import bbs.model.User;
 import bbs.service.UserService;
 import blade.annotation.Component;
 import blade.kit.BeanKit;
 import blade.kit.EncrypKit;
+import blade.kit.MailKit;
 import blade.kit.StringKit;
 import blade.plugin.sql2o.Model;
+import blade.plugin.sql2o.Page;
+import blade.plugin.sql2o.WhereParam;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -238,6 +242,20 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getByUID(Integer uid) {
 		return model.fetchByPk(uid);
+	}
+
+	@Override
+	public Page<Map<String, Object>> getUsers(WhereParam whereParam, Integer page, Integer pageSize) {
+		return model.where(whereParam).fetchPageMap(page, pageSize);
+	}
+
+	@Override
+	public void updateUserName(Integer uid, String username, String email) {
+		// 修改用户名，发送新密码到邮箱
+		String pwd = StringKit.random(10);
+		String newPwd = EncrypKit.md5(username + pwd);
+		model.update().param("username", username).param("password", newPwd).eq("uid", uid).executeAndCommit();
+		MailKit.asynSend(email, Constant.MAIL_ACTIVE_TITLE, String.format(Constant.MAIL_NEWUSER_CONTENT, username, pwd));
 	}
 	
 }

@@ -1,0 +1,61 @@
+#include("./common/header.html", {site_title:"用户管理"})
+<div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">所有用户</h3>
+                    </div>
+                    <div class="panel-body table-responsive">
+                    	<form action="/admin/user/search" class="navbar-form navbar-left" role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="username" name="username" placeholder="搜索用户名" value="${username}">
+                            </div>
+                            <button type="submit" class="btn btn-default">提交</button>
+                        </form>
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>用户名</th>
+                                <th>邮箱</th>
+                                <th>注册时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                             #for(item : userpage.results)
+                             <tr>
+                                <td>${item.uid}</td>
+                                <td><a href="${base_url('/member/') + item.username}" target="_blank">${item.username}</a></td>
+                                <td>${item.email}</td>
+                                <td><span title="${fmtdate(item.regtime)}">${fmtdate(item.regtime)}</span></td>
+                                <td>
+                                #if(login_user.group_id == 1)
+                                	<a href="${base_url('/admin/user/edit/') + item.uid}">编辑</a>
+                                #end
+                                #if(item.is_active == 1 && item.group_id != 1)
+                               	<a href="${base_url('/admin/user/ban/') + item.uid}">禁言</a>
+                               	#else
+                               	#if(item.is_active == 0)已禁言#end
+                               	#end
+                                </td>
+                            </tr>
+                             #end
+                            </tbody>
+                        </table>
+	                    #if(userpage.totalPage > 1)
+	                    <ul class="pager">
+	                    #if(userpage.page > 1)
+	                    <li class="previous"><a href="${base_url('/admin/user/') + userpage.prev_page}">上一页</a></li>
+	                    #end
+	                    <li class="next"><a href="${base_url('/admin/user/') + userpage.next_page}">下一页</a></li>
+	                    </ul>
+	                    #end
+                    </div>
+                </div>
+            </div><!-- /.col-md-8 -->
+            #include("./common/sidebar.html")
+	</div><!-- /.row -->
+    </div><!-- /.container -->
+#include("./common/footer.html") 

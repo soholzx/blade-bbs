@@ -83,4 +83,11 @@ public class Constant {
 			+ "<p>请点击如下链接进行激活：</p>"
 			+ "<p> <a href='%s' target='_blank'>%s</a> </p>"; 
 	
+	/**
+	 * 修改用户名邮件内容
+	 */
+	public static String MAIL_NEWUSER_CONTENT = "<p>您更换了用户名！ </p>"
+			+ "<p>新的用户名是：%s</p>"
+			+ "<p>新的密码是：%s</p>"; 
+	
  }
