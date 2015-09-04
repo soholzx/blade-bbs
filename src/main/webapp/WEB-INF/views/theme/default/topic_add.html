@@ -1,0 +1,50 @@
+#include("./common/header.html", {site_title:"创建新主题"})
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">创建新主题</h3>
+                </div>
+                <div class="panel-body">
+                	#if(null!=error)<div class="alert alert-danger">${error}</div>#end
+                	<form id="topic-add" action="${base_url('/topic/add')}" method="post" accept-charset="utf-8" role="form">
+                        <div class="form-group">
+                            <label for="title">标题</label>
+                            <input type="text" class="form-control" id="title"  name="title" placeholder="标题" value="${title}">
+                        </div>
+                        <div class="form-group">
+                            <label for="nid">节点</label>
+                            <select class="form-control" id="nid"  name="nid">
+                                <option value ="">请选择节点</option>
+                                #for(node : nodes)
+			                    	#if(node.pid == 0 && null != node.children)
+			                    		#if(null != node.children)
+				                    		<optgroup label="${node.nname}">
+					                     	#for(nodeitem : node.children)
+					                     	<option value ="${nodeitem.nid}">${nodeitem.nname}</option>
+					                     	#end
+				                     	#else
+				                     		<option value ="${node.nid}">${node.nname}</option>
+			                    		#end
+			                    	#end
+			                    #end
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="nid">主题内容</label>
+	                        <div class="form-group">
+	                            <textarea id="content" class="form-control" name="content" rows="4">${content}</textarea>
+	                        </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-small">提交</button>
+                    </form>
+                </div>
+            </div>
+        </div><!-- /.col-md-8 -->
+        #include("./common/sidebar.html")
+    </div>
+</div>
+#include("./common/footer.html")
+</body>
+</html>

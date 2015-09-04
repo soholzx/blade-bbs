@@ -1,0 +1,20 @@
+#include("./common/header.html", {site_title:"激活"})
+<div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">激活消息</h3>
+                    </div>
+                    <div class="panel-body">
+                    	#if(null!=error)<div class="alert alert-danger">${error}</div>#end
+                    	#if(null != status && status=="success")<div class="alert alert-info">恭喜您，激活成功！</div>#end
+                    </div>
+                </div>
+            </div><!-- /.col-md-8 -->
+    	#include("./common/sidebar.html")
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+#include("./common/footer.html")
+</body>
+</html>

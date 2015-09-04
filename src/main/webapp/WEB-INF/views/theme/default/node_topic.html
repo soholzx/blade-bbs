@@ -1,0 +1,50 @@
+#include("./common/header.html", {site_title : node.nname})
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><a href="${base_url('/')}">首页</a> / <a href="${base_url('/go/') + node.nkey}">${node.nname}</a><a class="pull-right" href="${follow_link}">${follow_status}</a></h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="media-list">
+                    	#for(topic : topicPage.results)
+                    	<li class="media">
+                            <div class="pull-right">
+                                <span class="badge topic-comment"><a href="${base_url('/topic/')}${topic.tid}#Reply${topic.comment}">${topic.comment}</a></span>
+                            </div>
+                            <a class="media-left" href="${base_url('/member/') + topic.username}"><img width="50" height="50" class="img-rounded" src="${base_url('/')}${topic.avatar}" alt="${topic.username}"></a>
+                            <div class="media-body">
+                                <h4 class="media-heading topic-list-heading"><a href="${base_url('/topic/') + topic.tid}">${topic.title}</a></h4>
+                                <p class="small text-muted">
+                                    <span class="span-default"><a href="${base_url('node/') + topic.tid}">${topic.nname}</a></span>&nbsp;•&nbsp;
+                                    <span><a href="${base_url('/member/') + topic.username}">${topic.username}</a></span>&nbsp;•&nbsp;
+                                    <span>${timespan(topic.replytime)}</span>&nbsp;•&nbsp;
+                                    #if(null != topic.rname)
+                                    <span>最后回复来自 <a href="${base_url('/member/') + topic.rname}">${topic.rname}</a></span>
+                                    #else
+                                    <span>暂无回复</span>
+                                    #end
+                                </p>
+                            </div>
+                        </li>
+                        <hr class="smallhr">
+                    	#end
+                    </ul>
+                    #if(topicPage.totalPage > 1)
+                    <ul class="pager">
+                    #if(topicPage.page > 1)
+                    <li class="previous"><a href="${base_url('/recent/') + topicPage.prev_page}">上一页</a></li>
+                    #end
+                    <li class="next"><a href="${base_url('/recent/') + topicPage.next_page}">下一页</a></li>
+                    </ul>
+                    #end
+                </div>
+            </div><!-- /.topic list -->
+        </div><!-- /.col-md-8 -->
+		#include("./common/sidebar.html")
+    </div>
+</div>
+#include("./common/footer.html")
+</body>
+</html>

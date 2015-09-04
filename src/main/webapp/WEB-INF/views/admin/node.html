@@ -1,0 +1,32 @@
+#include("./common/header.html", {site_title:"节点管理"})
+<div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">节点管理</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                        #for(node : nodes)
+	                        #if(node.pid == 0 && null != node.children)
+	                        	<li class="list-group-item">${node.nname}<a href="${base_url('/admin/node/edit/')}${node.nid}" class="pull-right">编辑</a></li>
+	                        	#for(nodeitem : node.children)
+	                        	<li class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;|---- ${nodeitem.nname}<a href="${base_url('/admin/node/edit/')}${nodeitem.nid}" class="pull-right">编辑</a></li>
+	                        	#end
+	                       	#end
+                        #end
+                        
+                        #for(node : nodes)
+	                        #if(node.pid == 0 && null == node.children)
+	                        <li class="list-group-item">${node.nname}<a href="${base_url('/admin/node/edit/')}${node.nid}" class="pull-right">编辑</a></li>
+	                       	#end
+                        #end
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- /.col-md-8 -->
+            #include("./common/sidebar.html")
+	</div><!-- /.row -->
+    </div><!-- /.container -->
+#include("./common/footer.html") 

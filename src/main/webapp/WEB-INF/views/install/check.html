@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="${cdn}/static/css/bootstrap.flatly.min.css?v=${version}" rel="stylesheet">
+    <link href="${cdn}/static/css/custom.css?v=${version}" rel="stylesheet">
+    <link rel="shortcut icon" href="${cdn}/static/img/favicon.png?v=${version}">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <title>安装向导 | Powered By Blade BBS</title>
+</head>
+<body>
+<div class="container">
+	#if(null != error)
+	${error}
+	#else
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1" style="margin-top:40px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">安装向导 >> 检测环境</div>
+                <div class="panel-body table-responsive">
+                    <h3>环境检测</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>检测项目</th>
+                                <th>推荐配置</th>
+                                <th>最低要求</th>
+                                <th>当前状态</th>
+                                <th> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        	#for(item : environment)
+                        	<tr>
+                                <td>${item.name}</td>
+                                <td>${item.recommend}</td>
+                                <td>${item.lowest}</td>
+                                <td>${item.current}</td>
+                                <td>
+                                    #if(item.isok)
+                                        <font color="green"><span class="glyphicon glyphicon-ok"></span></font>
+                                    #else
+                                        <font color="red"><span class="glyphicon glyphicon-remove"></span></font>
+                                    #end
+                                </td>
+                            </tr>
+                        	#end
+                        </tbody>
+                    </table>
+                    <h3>目录、文件权限检查</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>检测项目</th>
+                                <th>安装需求</th>
+                                <th>当前状态</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>static/upload/</td>
+                                <td>可写</td>
+                                <td>
+                                    #if(write)
+                                                                                                可写 <font color="green"><span class="glyphicon glyphicon-ok"></span></font>
+                                    #else
+                                                                                                不可写 <font color="red"><span class="glyphicon glyphicon-remove"></span></font>
+                                    #end
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <center>
+                        <br><br>
+                        #if(doNext)
+                        <a class="btn btn-primary btn-block" href="${base_url('install/process')}" role="button">下一步</a>
+                        #else
+                        <a class="btn btn-danger btn-block" href="${base_url('install/check')}" role="button">重新检测</a>
+                        #end
+                    </center>
+                </div>
+                <center class="panel-footer">
+                    Copyright © 2015 <a href="https://github.com/bladejava/blade-bbs">Blade BBS</a>. All rights reserved.
+                </center>
+            </div>
+        </div>
+    </div>
+   #end
+</div>
+</body>
+</html>

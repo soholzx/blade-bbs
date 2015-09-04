@@ -1,0 +1,12 @@
+#if(null != login_user)
+<link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css?v=${version}">
+<link rel="stylesheet" href="${cdn}/static/css/simplemde.min.css?v=${version}">
+<script src="${cdn}/static/js//simplemde.min.js?v=${version}"></script>
+<script type="text/javascript">
+var contentMd = new SimpleMDE({ 
+	element: document.getElementById("content"),
+	toolbarGuideIcon: false
+});
+contentMd.render();
+</script>
+#end

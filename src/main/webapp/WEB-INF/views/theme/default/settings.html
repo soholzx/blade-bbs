@@ -1,0 +1,125 @@
+#include("./common/header.html", {site_title:"设置"})
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">用户编辑</h3>
+                </div>
+                <div class="panel-body">
+                	#if(null!=base_error)<div class="alert alert-danger">${base_error}</div>#end
+                	#if(null!=base_success)<div class="alert alert-info">${base_success}</div>#end
+                	<form action="${base_url('/user/edit?type=base')}" class="form-horizontal" role="form" method="post">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">用户名</label>
+                            <div class="col-sm-10">
+                            	<p class="form-control-static">${login_user.username}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-2 control-label">电子邮件</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="email" name="email" value="${login_user.email}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="qq" class="col-sm-2 control-label">QQ</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="qq" name="qq" value="${login_user.qq}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="location" class="col-sm-2 control-label">所在地</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="location" name="location" value="${login_user.location}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="homepage" class="col-sm-2 control-label">个人主页</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="homepage" name="homepage" value="${login_user.homepage}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signature" class="col-sm-2 control-label">签名</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="signature" name="signature" value="${login_user.signature}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="introduction" class="col-sm-2 control-label">个人简介</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="introduction" name="introduction" rows="3">${login_user.introduction}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">保存信息</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">更换头像</h3>
+                </div>
+                <div class="panel-body">
+                	#if(null!=error)<div class="alert alert-danger">${error}</div>#end
+                	<form enctype="multipart/form-data" action="${base_url('/user/edit?type=avatar')}" method="post">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">当前头像</label>
+                            <div class="col-sm-10">
+                            	<img width="73" height="73" class="img-rounded" alt="${login_user.username}" src="${base_url('/') + login_user.avatar}">
+                            	<input type="file" name="avatar" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">更换头像</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">修改密码</h3>
+                </div>
+                <div class="panel-body">
+                	#if(null!=pwd_error)<div class="alert alert-danger">${pwd_error}</div>#end
+                	#if(null!=pwd_success)<div class="alert alert-danger">${pwd_success}</div>#end
+                	<form action="${base_url('/user/edit?type=pwd')}" class="form-horizontal" role="form" method="post">
+                        <div class="form-group">
+                            <label for="email" class="col-sm-2 control-label">当前密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" name="curpwd" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-2 control-label">新密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" name="newpwd" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-2 control-label">确认新密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" name="renewpwd" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">更改密码</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- /.col-md-8 -->
+        #include("./common/sidebar.html")
+	</div><!-- /.row -->
+    </div><!-- /.container -->
+#include("./common/footer.html") 

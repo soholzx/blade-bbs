@@ -1,0 +1,65 @@
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">你好#if(null!=login_user)${login_user.username}#end</h3>
+                    </div>
+                    <div class="panel-body">
+                    	#if(null != login_user)
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <a href="${base_url('/member/') + login_user.username}">
+                                    <img width="50" height="50" class="img-rounded img-responsive pull-left" src="${base_url('/') + login_user.avatar}" alt="avatar">
+                                </a>
+                                <p class="username"><a href="${base_url('/member/') + login_user.username}">${login_user.username}</a></p>
+                            </div>
+                            <div class="user-panel">
+                                <div class="col-xs-4"><center><a href="${base_url('/follow/nodes')}"><p class="big-font">${login_user.node_follow}</p><p class="text-muted">节点收藏</p></a></center></div>
+                                <div class="col-xs-4 side-border"><center><a href="${base_url('/follow/topics')}"><p class="big-font">${login_user.topic_follow}</p><p class="text-muted">主题收藏</p></a></center></div>
+                                <div class="col-xs-4"><center><a href="${base_url('/follow/users')}"><p class="big-font">${login_user.user_follow}</p><p class="text-muted">特别关注</p></a></center></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <a href="${base_url('/topic/add')}">创作新主题</a>
+                            </div>
+                        </div>
+                        #else
+                        ${sysinfo.site_introduction}
+                        #end
+                    </div>
+                    <div class="panel-footer">
+                    	#if(null != login_user)
+                        <a href="${base_url('/notice')}">${login_user.notice} 条未读提醒</a>
+						#else
+                        <a href="${base_url('/signup')}">注册</a>　<a href="${base_url('/signin')}">登录</a>
+						#end
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                     <p class="panel-body">
+                     	开源JavaWeb框架：<a href="https://github.com/biezhi/blade" target="_blank">blade</a><br/>
+                     	开源论坛：<a href="https://github.com/bladejava/blade-bbs" target="_blank">blade-bbs</a><br/>
+                     	技术交流群：<a href="http://shang.qq.com/wpa/qunwpa?idkey=932642920a5c0ef5f1ae902723c4f168c58ea63f3cef1139e30d68145d3b5b2f" target="_blank">1013565</a><br/>
+                     </p>
+                </div>
+                <ul class="list-group hot-topic">
+                    <li class="list-group-item hot-topic-title">热门主题</li>
+                    #for(topic : hot_topics)
+                    <li class="list-group-item text-muted">
+                    	<img alt="${topic.username}" src="${base_url('/')+topic.avatar}" width="24" height="24">
+                        <a href="${base_url('/topic/')+topic.tid}">${topic.title}</a>
+                    </li>
+                    #end
+                </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">社区运行状况</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>注册会员：${sysinfo.site_user_number}</p>
+                        <p>　　主题：${sysinfo.site_topic_number}</p>
+                        <p>　　回复：${sysinfo.site_comment_number}</p>
+
+                    </div>
+                </div>
+            </div><!-- /.col-md-4 -->

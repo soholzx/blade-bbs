@@ -1,0 +1,40 @@
+#include("./common/header.html", {site_title:"通知中心"})
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">通知中心</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="media-list">
+                    	#for(notice : notices.results)
+                    	<li class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading topic-list-heading"><small><a href="${base_url('/member/') + notice.from_username}">${notice.from_username}</a> 在#if(notice.ntype==1)"你创建的"#end主题 <a href="${base_url('/topic/') + notice.topicid}">${notice.topictitle}</a> 中回复了你</small></h4>
+                                <blockquote>
+                                    ${notice.comment}
+                                    <small>${timespan(notice.addtime)}</small>
+                                </blockquote>
+                            </div>
+                        </li>
+                        <hr class="smallhr">
+                    	#end
+                    </ul>
+                    #if(notices.totalPage > 1)
+                    <ul class="pager">
+                    #if(notices.page > 1)
+                    <li class="previous"><a href="${base_url('/notice/') + notices.prev_page}">上一页</a></li>
+                    #end
+                    <li class="next"><a href="${base_url('/notice/') + topicPage.next_page}">下一页</a></li>
+                    </ul>
+                    #end
+                </div>
+            </div>
+        </div><!-- /.col-md-8 -->
+        #include("./common/sidebar.html")
+    </div>
+</div>
+#include("./common/footer.html")
+</body>
+</html>

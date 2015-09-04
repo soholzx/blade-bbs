@@ -1,0 +1,99 @@
+#include("./common/header.html", {site_title: profile.username})
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-md-2">
+                        <img class="img-rounded img-responsive" src="${base_url('/') + profile.avatar}" alt="${profile.username}">
+                    </div>
+                    <div class="col-md-10">
+                    	#if(!isfollow)
+	                    	#if(null == login_user || (null != login_user && login_user.uid != profile.uid) )
+	                    	<a href="${base_url('/user/follow/') + profile.uid}" class="btn btn-default btn-xs pull-right" role="button">关注Ta</a>
+		                   	#end
+	                   	#else
+	                   		#if(null == login_user || (null != login_user && login_user.uid != profile.uid) )
+	                   		<a href="javascript:void(0)" class="btn btn-default btn-xs pull-right" role="button">取消关注</a>
+	                   		#end
+                    	#end
+                        <h4>${profile.username}</h4>
+                        <p class="text-muted"><small>${profile.username}是第${profile.uid}号会员，加入于${fmtdate(profile.regtime)}</small></p>
+                        #if(null != profile.signature && profile.signature != "")
+                        <p>签名：${profile.signature}</p>
+                        #end
+                        #if(null != profile.homepage && profile.homepage != "")
+                        <p>个人主页：<a href="${profile.homepage}">${profile.homepage}</a></p>
+                        #end
+                        #if(null != profile.location && profile.location != "")
+                        <p>所在地：${profile.location}</p>
+                        #end
+                    </div>
+                    <div class="col-md-12">
+                        <p>$!{profile.introduction}</p>
+                    </div>
+                </div>
+            </div><!-- /.info -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><small>${profile.username} 最近创建的主题</small></h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="media-list">
+                    	#for(topic : recent_topics)
+                    	<li class="media">
+                            <div class="pull-right">
+                                <span class="badge topic-comment"><a href="${base_url('/topic/')}${topic.tid}#Reply${topic.comment}">${topic.comment}</a></span>
+                            </div>
+                            <a class="media-left" href="${base_url('/member/')}${topic.username}"><img width="48" height="48" class="img-rounded" src="${base_url('/')}${topic.avatar}" alt="${topic.username}"></a>
+                            <div class="media-body">
+                                <h4 class="media-heading topic-list-heading"><a href="${base_url('/topic/')}${topic.tid}">${topic.title}</a></h4>
+                                <p class="small text-muted">
+                                    <span><a href="${base_url('node/')}${topic.tid}">${topic.nname}</a></span>&nbsp;•&nbsp;
+                                    <span><a href="${base_url('/member/')}${topic.username}">${topic.username}</a></span>&nbsp;•&nbsp;
+                                    <span>${timespan(topic.replytime)}</span>&nbsp;•&nbsp;
+                                    #if(null != topic.rname)
+                                    <span>最后回复来自 <a href="${base_url('/member/')}${topic.rname}">${topic.rname}</a></span>
+                                    #else
+                                    <span>暂无回复</span>
+                                    #end
+                                </p>
+                            </div>
+                        </li>
+                        <hr class="smallhr">
+                    	#end
+                    </ul>
+                    <ul class="pager">分页</ul>
+                </div>
+            </div><!-- /.topics -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><small>${profile.username} 最近回复了</small></h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="media-list">
+                    	<!-- 
+                    	<?php foreach ($comments as $comment) : ?>
+                        <li class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading topic-list-heading"><small>回复了 <?php echo $comment['topicownername']; ?> 创建的主题 > </small><a href="<?php echo base_url('topic/'.$comment['topicid']); ?>"><?php echo $comment['topictitle']; ?></a></h4>
+                                <blockquote>
+                                    <?php echo $comment['content'];?>
+                                    <small><?php echo timespan($comment['replytime']);?></small>
+                                </blockquote>
+                            </div>
+                        </li>
+                        <hr class="smallhr">
+                        <?php endforeach; ?>
+                    	 -->
+                    </ul>
+                    <ul class="pager">回复分页</ul>
+                </div>
+            </div><!-- /.comments -->
+        </div><!-- /.col-md-8 -->
+        #include("./common/sidebar.html")
+    </div>
+</div>
+#include("./common/footer.html")
+</body>
+</html>
