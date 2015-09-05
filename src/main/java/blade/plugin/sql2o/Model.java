@@ -35,9 +35,9 @@ public class Model<T extends Serializable> {
 	private boolean isOpenCache = Sql2oPlugin.INSTANCE.isOpenCache();
 	
 	/**
-	 * 缓存操作
+	 * 缓存对象
 	 */
-    public Sql2oCache sql2oCache = isOpenCache ? Sql2oCacheFactory.getSql2oCache() : null;
+    public Sql2oCache sql2oCache = Sql2oCacheFactory.getSql2oCache();
     
     /**
      * sql2o对象，操作数据库
