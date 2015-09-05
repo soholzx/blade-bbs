@@ -24,6 +24,8 @@ public enum Sql2oPlugin implements Plugin {
 	
 	private DBConfig dbConfig;
 	
+	private boolean isOpenCache = false;
+	
 	private Sql2oPlugin() {
 	}
 	
@@ -62,7 +64,7 @@ public enum Sql2oPlugin implements Plugin {
 		}
 		
 		if(StringKit.isNotBlank(openCache)){
-			INSTANCE.dbConfig.setIsopenCache(Boolean.valueOf(openCache.trim()));
+			isOpenCache = Boolean.valueOf(openCache.trim());
 		}
 		return INSTANCE;
 	}
@@ -87,10 +89,7 @@ public enum Sql2oPlugin implements Plugin {
 	}
 	
 	public Sql2oPlugin openCache(){
-		if(null == INSTANCE.dbConfig){
-			INSTANCE.dbConfig = new DBConfig();
-			INSTANCE.dbConfig.setIsopenCache(true);
-		}
+		isOpenCache = true;
 		return INSTANCE;
 	}
 	
@@ -119,10 +118,7 @@ public enum Sql2oPlugin implements Plugin {
 	}
 	
 	public boolean isOpenCache() {
-		if(null == INSTANCE.dbConfig){
-			return false;
-		}
-		return INSTANCE.dbConfig.isIsopenCache();
+		return isOpenCache;
 	}
 	
 	public DBConfig dbConfig(){

@@ -22,8 +22,6 @@ public class DBConfig {
 	 */
 	private String passWord;
 
-	private boolean isopenCache = false;
-
 	public DBConfig() {
 		// TODO Auto-generated constructor stub
 	}
@@ -60,19 +58,10 @@ public class DBConfig {
 		this.passWord = passWord;
 	}
 
-	public boolean isIsopenCache() {
-		return isopenCache;
-	}
-
-	public void setIsopenCache(boolean isopenCache) {
-		this.isopenCache = isopenCache;
-	}
-
 	@Override
 	public String toString() {
 		return "DBConfig [driverName=" + driverName + ", url=" + url
-				+ ", userName=" + userName + ", passWord=" + passWord
-				+ ", isopenCache=" + isopenCache + "]";
+				+ ", userName=" + userName + ", passWord=" + passWord + "]";
 	}
 
 }

@@ -229,9 +229,6 @@ public class InstallRoute implements RouteBase {
 				FileKit.createFile(classPath + File.separator + "install.lock");
 				
 				Map<String, Object> dbMap = new HashMap<>();
-//				dbMap.put("blade.db.url", url);
-//				dbMap.put("blade.db.username", dbuser);
-//				dbMap.put("blade.db.password", dbpsw);
 				dbMap.put("url", url);
 				dbMap.put("username", dbuser);
 				dbMap.put("password", dbpsw);
@@ -243,7 +240,7 @@ public class InstallRoute implements RouteBase {
 					Properties props = PropertyKit.getProperty("ds.properties");
 					DataSource dataSource = DruidDataSourceFactory.createDataSource(props);
 					DataSourceManager.me().setDataSource(dataSource);
-					Sql2oPlugin.INSTANCE.run();
+					Sql2oPlugin.INSTANCE.openCache().run();
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}

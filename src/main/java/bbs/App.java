@@ -95,7 +95,7 @@ public class App extends Bootstrap {
 				Properties props = PropertyKit.getProperty("ds.properties");
 				DataSource dataSource = DruidDataSourceFactory.createDataSource(props);
 				DataSourceManager.me().setDataSource(dataSource);
-				Sql2oPlugin.INSTANCE.run();
+				Sql2oPlugin.INSTANCE.openCache().run();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
