@@ -77,6 +77,15 @@ public enum Sql2oPlugin implements Plugin {
 		return INSTANCE;
 	}
 	
+	/**
+	 * 设置数据源
+	 * @param dataSource 数据源对象
+	 */
+	public Sql2oPlugin config(DataSource dataSource){
+		DataSourceManager.me().setDataSource(dataSource);
+		return INSTANCE;
+	}
+	
 	public Sql2oPlugin openCache(){
 		if(null == INSTANCE.dbConfig){
 			INSTANCE.dbConfig = new DBConfig();
