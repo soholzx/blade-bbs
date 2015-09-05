@@ -69,9 +69,7 @@ public class HomeRoute implements RouteBase{
 			
 			List<Map<String, Object>> hot_topics = topicService.getTopicRecent(where, 1, 10, "view desc").getResults();
 			
-			WhereParam pagewhere = WhereParam.me().eq("a.status", 1);
-			
-			Page<Map<String, Object>> topicPage = topicService.getTopicRecent(pagewhere, page, 20, null);
+			Page<Map<String, Object>> topicPage = topicService.getTopicRecent(where, page, 20, null);
 			
 			modelAndView.add("nodes", nodes);
 			modelAndView.add("tnodes", tnodes);

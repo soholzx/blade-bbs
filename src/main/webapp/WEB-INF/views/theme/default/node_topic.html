@@ -17,7 +17,7 @@
                             <div class="media-body">
                                 <h4 class="media-heading topic-list-heading"><a href="${base_url('/topic/') + topic.tid}">${topic.title}</a></h4>
                                 <p class="small text-muted">
-                                    <span class="span-default"><a href="${base_url('node/') + topic.tid}">${topic.nname}</a></span>&nbsp;•&nbsp;
+                                    <span class="span-default"><a href="${base_url('/go/') + topic.nkey}">${topic.nname}</a></span>&nbsp;•&nbsp;
                                     <span><a href="${base_url('/member/') + topic.username}">${topic.username}</a></span>&nbsp;•&nbsp;
                                     <span>${timespan(topic.replytime)}</span>&nbsp;•&nbsp;
                                     #if(null != topic.rname)

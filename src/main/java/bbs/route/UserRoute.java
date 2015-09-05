@@ -2,6 +2,7 @@ package bbs.route;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,14 +11,17 @@ import bbs.Funcs;
 import bbs.kit.BBSKit;
 import bbs.kit.ImageKit;
 import bbs.model.User;
+import bbs.service.CommentService;
 import bbs.service.TopicService;
 import bbs.service.UserService;
 import blade.Blade;
 import blade.annotation.Inject;
+import blade.kit.DateKit;
 import blade.kit.EncrypKit;
 import blade.kit.FileKit;
 import blade.kit.IOKit;
 import blade.kit.StringKit;
+import blade.plugin.sql2o.Page;
 import blade.plugin.sql2o.WhereParam;
 import blade.render.ModelAndView;
 import blade.servlet.FileItem;
@@ -30,6 +34,9 @@ public class UserRoute implements RouteBase {
 	
 	@Inject
 	private TopicService topicService;
+	
+	@Inject
+	private CommentService commentService;
 	
 	@Override
 	public void run() {
@@ -66,6 +73,18 @@ public class UserRoute implements RouteBase {
 			// 该用户最近主题
 			List<Map<String, Object>> recent_topics = topicService.getTopicRecent(where, 1, 15, null).getResults();
 			modelAndView.add("recent_topics", recent_topics);
+			
+			// 最新回复
+			WhereParam whereParam = WhereParam.me();
+			whereParam.eq("a.uid", user.getUid());
+			
+			Page<Map<String, Object>> commentPage = commentService.getComments(whereParam, 1, 15);
+			modelAndView.add("commentPage", commentPage);
+			
+			Date time = DateKit.getDateByUnixTime(DateKit.getCurrentUnixTime() - 86400*90);
+			WhereParam hotwhere = WhereParam.me().eq("a.status", 1).greaterThan("a.addtime", time);
+			List<Map<String, Object>> hot_topics = topicService.getTopicRecent(hotwhere, 1, 10, "view desc").getResults();
+			modelAndView.add("hot_topics", hot_topics);
 			
 			// 收藏状态
 			Integer uid = null;
